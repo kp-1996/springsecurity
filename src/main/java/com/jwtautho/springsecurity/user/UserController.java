@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -21,10 +23,14 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public ApplicationUser signUp(@RequestBody ApplicationUser user) {
+    public ApplicationUser signUp(@ApiParam(name = "payload", value = "Request body", required = true)@RequestBody ApplicationUser user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(user);
         return user;
+    }
+    @PostMapping("/login")
+    public void login(@ApiParam(name = "payload", value = "Request body", required = true)@RequestBody ApplicationUser user) {
+        
     }
     
 }
